@@ -6,28 +6,33 @@ class Deck {
   final houses = new List<House>();
   final cards = new List<KeyforgeCard>();
 
-  Deck.FromJson(Map<String, dynamic> json) {
-    var moreJson = json['_linked']['houses'];
-    for (var house in moreJson) {
-      var newHouse = House.FromJson(house);
+  Deck.fromJson(Map<String, dynamic> linked, Map<String, dynamic> deck) {
+    var houseDetails = linked["houses"];
+    var linkedHouses = deck['_links']['houses'];
+    for (var house in houseDetails) {
+      var houseList = List.from(linkedHouses);
+      if (houseList.where((h) => h == house["name"]).isEmpty)
+        continue;
+
+      var newHouse = House.fromJson(house);
       houses.add(newHouse);
     }
 
     var cardsDetailed = new List<KeyforgeCard>();
-    var cardsDetailedJson = json['_linked']['cards'];
+    var cardsDetailedJson = linked['cards'];
     for (var cardJson in cardsDetailedJson) {
-      var newCard = KeyforgeCard.FromJson(cardJson);
+      var newCard = KeyforgeCard.fromJson(cardJson);
       cardsDetailed.add(newCard);
     }
 
-    var cardList = json['data']['_links']['cards'];
+    var cardList = deck['_links']['cards'];
     for (String cardId in cardList) {
       cards.add(cardsDetailed.firstWhere((c) => c.id == cardId));
     }
 
     cards.sort((c1, c2) => c1.card_number.compareTo(c2.card_number));
 
-    deckTitle = json['data']['name'];
+    deckTitle = deck['name'];
   }
 
   List<KeyforgeCard> getCardsFromHouse(String houseName) {

@@ -1,24 +1,29 @@
-import 'package:flutter/material.dart';
-
 class KeyforgeCard
 {
   final String id;
+  // ignore: non_constant_identifier_names
   final String card_title;
   final String house;
+  // ignore: non_constant_identifier_names
   final String card_type;
+  // ignore: non_constant_identifier_names
   final String front_image;
+  // ignore: non_constant_identifier_names
   final String card_text;
   final String traits;
   final int amber;
   final int power;
   final int armor;
   final String rarity;
+  // ignore: non_constant_identifier_names
   final String flavor_text;
+  // ignore: non_constant_identifier_names
   final int card_number;
   final int expansion;
+  // ignore: non_constant_identifier_names
   final bool is_maverick;
 
-  KeyforgeCard.FromJson(Map<String, dynamic> json)
+  KeyforgeCard.fromJson(Map<String, dynamic> json)
     : id = json['id'],
       card_title = json['card_title'],
       house = json['house'],

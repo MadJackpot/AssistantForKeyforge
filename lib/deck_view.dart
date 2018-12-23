@@ -1,5 +1,4 @@
 import 'package:assistant_for_keyforge/card_view.dart';
-import 'package:assistant_for_keyforge/house.dart';
 import 'package:assistant_for_keyforge/keyforge_card.dart';
 import 'package:flutter/material.dart';
 import 'package:assistant_for_keyforge/deck.dart';
@@ -15,11 +14,13 @@ class DeckView extends StatefulWidget {
 
 class _DeckViewState extends State<DeckView> {
   List<KeyforgeCard> cardList;
+  int _currentSelectionIndex;
 
   @override
   Widget build(BuildContext context) {
     if (cardList == null) {
       cardList = widget.deck.getCardsFromHouse(widget.deck.houses[0].name);
+      _currentSelectionIndex = 0;
     }
 
     return Scaffold(
@@ -42,6 +43,7 @@ class _DeckViewState extends State<DeckView> {
                   onPressed: (){
                     setState((){
                       cardList = widget.deck.getCardsFromHouse(widget.deck.houses[0].name);
+                      _currentSelectionIndex = 0;
                     });
                   },
                 ),
@@ -53,6 +55,7 @@ class _DeckViewState extends State<DeckView> {
                   onPressed: (){
                     setState((){
                       cardList = widget.deck.getCardsFromHouse(widget.deck.houses[1].name);
+                      _currentSelectionIndex = 1;
                     });
                   },
                 ),
@@ -64,10 +67,17 @@ class _DeckViewState extends State<DeckView> {
                   onPressed: (){
                     setState((){
                       cardList = widget.deck.getCardsFromHouse(widget.deck.houses[2].name);
+                      _currentSelectionIndex = 2;
                     });
                   },
                 ),
               ],
+            ),
+          ),
+          Container(
+            height: 40.0,
+            child: Center(
+              child: Text("Cards for ${widget.deck.houses[_currentSelectionIndex].name}"),
             ),
           ),
           Flexible(
@@ -128,21 +138,23 @@ Image _getRarityImage(KeyforgeCard card) {
   return Image.asset(asset, scale: scale);
 }
 
-class _houseButton extends StatelessWidget {
+/*
+class _HouseButton extends StatelessWidget {
   final Deck _deck;
-  final int _house_index;
-  final Function setstate;
+  final int _houseIndex;
+  final _DeckViewState otherWidget;
 
-  _houseButton(this._deck, this._house_index, this.setstate);
+  _HouseButton(this._deck, this._houseIndex, this.otherWidget);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       child: Hero(
-        tag: "hero-${_deck.deckTitle}-${_deck.houses[0].name}",
-        child: Image.network(_deck.houses[0].image),
+        tag: "hero-${_deck.deckTitle}-${_deck.houses[_houseIndex].name}",
+        child: Image.network(_deck.houses[_houseIndex].image),
       ),
-      onPressed: (){ setstate(); },
+      onPressed: (){ otherWidget.setState(() => otherWidget.cardList = _deck.getCardsFromHouse(_deck.houses[_houseIndex].name)); },
     );
   }
 }
+*/
