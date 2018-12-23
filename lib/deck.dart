@@ -13,11 +13,19 @@ class Deck {
       houses.add(newHouse);
     }
 
-    var cardsJson = json['_linked']['cards'];
-    for (var cardJson in cardsJson) {
+    var cardsDetailed = new List<KeyforgeCard>();
+    var cardsDetailedJson = json['_linked']['cards'];
+    for (var cardJson in cardsDetailedJson) {
       var newCard = KeyforgeCard.FromJson(cardJson);
-      cards.add(newCard);
+      cardsDetailed.add(newCard);
     }
+
+    var cardList = json['data']['_links']['cards'];
+    for (String cardId in cardList) {
+      cards.add(cardsDetailed.firstWhere((c) => c.id == cardId));
+    }
+
+    cards.sort((c1, c2) => c1.card_number.compareTo(c2.card_number));
 
     deckTitle = json['data']['name'];
   }

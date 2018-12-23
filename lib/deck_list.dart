@@ -30,9 +30,18 @@ class _DeckListState extends State<DeckList> {
             height: 50.0,
             child: Row(
               children: <Widget>[
-                Image.network(decks[index].houses[0].image, width: 30.0),
-                Image.network(decks[index].houses[1].image, width: 30.0),
-                Image.network(decks[index].houses[2].image, width: 30.0),
+                Hero(
+                  tag: "hero-${decks[index].deckTitle}-${decks[index].houses[0].name}",
+                  child: Image.network(decks[index].houses[0].image, width: 30.0),
+                ),
+                Hero(
+                  tag: "hero-${decks[index].deckTitle}-${decks[index].houses[1].name}",
+                  child: Image.network(decks[index].houses[1].image, width: 30.0),
+                ),
+                Hero(
+                  tag: "hero-${decks[index].deckTitle}-${decks[index].houses[2].name}",
+                  child: Image.network(decks[index].houses[2].image, width: 30.0),
+                ),
               ],
             ),
           ),
