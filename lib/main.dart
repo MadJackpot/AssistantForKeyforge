@@ -1,5 +1,6 @@
 import 'package:assistant_for_keyforge/deck.dart';
 import 'package:assistant_for_keyforge/deck_list.dart';
+import 'package:assistant_for_keyforge/my_deck_list.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
@@ -28,7 +29,9 @@ class MainApp extends StatelessWidget {
         ),
         fontFamily: "Impact",
         textTheme: TextTheme(
-          title: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, fontFamily: 'Impact'),
+          body1: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, fontFamily: 'Impact'),
+          title: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, fontFamily: 'Impact', color: Colors.yellow.shade400),
+          display1: TextStyle(fontSize: 16.0, fontFamily: 'Impact', color: Colors.yellow.shade400),
         ),
       ),
     );
@@ -46,6 +49,8 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   final decks = new List<Deck>();
+
+  bool showMyDecks = false;
 
   AppState() {
     /*for (int i = 1; i < 36146; ++i) {
@@ -79,9 +84,37 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.all(0.0), // Remove the padding for ListView.
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("KeyForge Assistant"),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryVariant,
+              ),
+            ),
+            ListTile(
+              title: Text("All Decks"),
+              onTap: () => setState(() {
+                showMyDecks = false;
+                Navigator.pop(context);
+              }),
+            ),
+            ListTile(
+              title: Text("My Decks"),
+              onTap: () => setState(() {
+                showMyDecks = true;
+                Navigator.pop(context);
+              }),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text("Deck List"),
-        leading: Icon(Icons.wb_sunny),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        textTheme: Theme.of(context).textTheme,
         actions: <Widget>[
           FlatButton(
             child: Icon(Icons.image),
@@ -94,15 +127,7 @@ class AppState extends State<App> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Expanded(
-            child: DeckList(),
-          )
-        ],
-      ),
+      body: showMyDecks ? MyDeckList() : DeckList(),
     );
   }
 }

@@ -25,6 +25,8 @@ class _DeckViewState extends State<DeckView> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        textTheme: Theme.of(context).textTheme,
         title: Text(widget.deck.deckTitle),
       ),
       body: Column(
@@ -75,9 +77,9 @@ class _DeckViewState extends State<DeckView> {
             ),
           ),
           Container(
-            height: 40.0,
+            height: 50.0,
             child: Center(
-              child: Text("Cards for ${widget.deck.houses[_currentSelectionIndex].name}"),
+              child: Text("Cards for ${widget.deck.houses[_currentSelectionIndex].name}", style: TextStyle(fontSize: 20.0)),
             ),
           ),
           Flexible(

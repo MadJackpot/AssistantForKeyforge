@@ -55,7 +55,7 @@ class _DeckListState extends State<DeckList> {
                 ],
               ),
             ),
-            title: Text(decks[index].deckTitle, style: Theme.of(context).textTheme.title,),
+            title: Text(decks[index].deckTitle, style: Theme.of(context).textTheme.body1,),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) => DeckView(decks[index])
@@ -73,7 +73,7 @@ class _DeckListState extends State<DeckList> {
     for (int i = startingPageCount; i <= endPageToShow; ++i) {
       var response = await http.get("https://www.keyforgegame.com/api/decks/?page=$i&links=cards");
       setState(() {
-        var obj = json.decode(response.body);
+        var obj = json.decode(utf8.decode(response.bodyBytes));
         for (var deck in obj["data"]) {
           decks.add(Deck.fromJson(obj["_linked"], deck));
         }
