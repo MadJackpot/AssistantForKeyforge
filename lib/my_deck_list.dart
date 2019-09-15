@@ -17,7 +17,6 @@ class _MyDeckListState extends State<MyDeckList> {
   var oldImageList = new List<String>();
   var newImageList = new List<String>();
   Timer _timer;
-  var _firstPass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,6 @@ class _MyDeckListState extends State<MyDeckList> {
     if (_timer == null) {
       _timer = new Timer.periodic(Duration(seconds: 10), (t) {
         setState((){
-          _firstPass = false;
           oldImageList = newImageList;
           newImageList = _getRandomizedImageList(decks);
         });
@@ -105,6 +103,11 @@ class _MyDeckListState extends State<MyDeckList> {
       var obj = json.decode(utf8.decode(secondDeck.bodyBytes));
       decks.add(Deck.fromJson(obj["_linked"], obj["data"]));
     });
+    var thirdDeck = await http.get("https://www.keyforgegame.com/api/decks/0cb9709c-5917-4364-8e5b-ad88aed0097b/?links=cards");
+    setState(() {
+      var obj = json.decode(utf8.decode(thirdDeck.bodyBytes));
+      decks.add(Deck.fromJson(obj["_linked"], obj["data"]));
+    });
   }
 }
 
@@ -162,6 +165,9 @@ class __AnimatedCardBoxState extends State<_AnimatedCardBox> {
 
     if (timer == null)
       timer = Timer.periodic(Duration(seconds: 13), (t) async {
+        if (!this.mounted)
+          return;
+
         setState(() => showFirstImage = !showFirstImage);
 
         Future.delayed(Duration(seconds: 5), () {

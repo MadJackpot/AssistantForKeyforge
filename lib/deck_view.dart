@@ -1,4 +1,5 @@
 import 'package:assistant_for_keyforge/card_view.dart';
+import 'package:assistant_for_keyforge/deck_card_view.dart';
 import 'package:assistant_for_keyforge/keyforge_card.dart';
 import 'package:flutter/material.dart';
 import 'package:assistant_for_keyforge/deck.dart';
@@ -28,6 +29,13 @@ class _DeckViewState extends State<DeckView> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         textTheme: Theme.of(context).textTheme,
         title: Text(widget.deck.deckTitle),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.card_membership),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)
+              => DeckCardView(widget.deck.getAllCards()))),
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[

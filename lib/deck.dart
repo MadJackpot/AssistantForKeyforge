@@ -38,4 +38,14 @@ class Deck {
   List<KeyforgeCard> getCardsFromHouse(String houseName) {
     return cards.where((a) => a.house == houseName).toList();
   }
+
+  List<KeyforgeCard> getAllCards() {
+    var allCardsInHouseOrder = new List<KeyforgeCard>();
+
+    allCardsInHouseOrder.addAll(cards.where((c) => c.house == houses[0].name));
+    allCardsInHouseOrder.addAll(cards.where((c) => c.house == houses[1].name));
+    allCardsInHouseOrder.addAll(cards.where((c) => c.house == houses[2].name));
+
+    return allCardsInHouseOrder;
+  }
 }

@@ -32,11 +32,11 @@ class KeyforgeCard
       card_text = json['card_text'],
       traits = json['traits'],
       amber = json['amber'],
-      power = json['power'],
-      armor = json['armor'],
+      power = int.parse(json['power']),
+      armor = int.parse(json['armor']),
       rarity = json['rarity'],
       flavor_text = json['flavor_text'],
-      card_number = json['card_number'],
+      card_number = int.parse(json['card_number']),
       expansion = json['expansion'],
       is_maverick = json['is_maverick'];
 }
